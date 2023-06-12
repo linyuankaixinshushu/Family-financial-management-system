@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.SpendDao">
+    <select id="findByPage" resultType="com.example.demo.pojo.SpendPojo">
+        SELECT * FROM spend
+        <where>
+            <if test="username != null and username != ''">
+                and username like CONCAT('%',#{username},'%')
+            </if>
+            <if test="kind != null and kind != ''">
+                and kind like CONCAT('%',#{kind},'%')
+            </if>
+            <if test="fromway != null and fromway != ''">
+                and fromway like CONCAT('%',#{fromway},'%')
+            </if>
+            <if test="begin != null and end != null">
+                and time between #{begin} and #{end}
+            </if>
+        </where>
+        LIMIT #{page_num},#{j}
+    </select>
+
+
+    <select id="count" resultType="int">
+        SELECT count(*) FROM spend
+        <where>
+            <if test="username != null and username != ''">
+                and username like CONCAT('%',#{username},'%')
+            </if>
+            <if test="kind != null and kind != ''">
+                and kind like CONCAT('%',#{kind},'%')
+            </if>
+            <if test="fromway != null and fromway != ''">
+                and fromway like CONCAT('%',#{fromway},'%')
+            </if>
+            <if test="begin != null and end != null">
+                and time between #{begin} and #{end}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
